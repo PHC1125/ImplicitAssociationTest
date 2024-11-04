@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Science Education IAT</title>
+<style>
+    body { 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        text-align: center; 
+        padding: 20px; 
+    }
+    .word { 
+        font-size: 24px; 
+        margin: 20px; 
+    }
+    .instructions { 
+        font-size: 20px; 
+        margin-bottom: 10px; 
+    }
+    #results { 
+        margin-top: 20px; 
+    }
+    table {
+        width: 100%; 
+        border-collapse: collapse; 
+        margin-top: 20px; 
+        border-radius: 8px; 
+        overflow: hidden;
+    }
+    th, td {
+        border: 1px solid #ccc; 
+        padding: 8px; 
+        text-align: left;
+        border-bottom: 2px solid #dee2e6;
+    }
+    th {
+        background-color: #00457c; 
+        color: white; 
+        font-size: 16px;
+    }
+    td {
+        background-color: #e8f4f8; 
+        color: #333;
+    }
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    tr:nth-child(odd) {
+        background-color: #fff;
+    }
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+    @media screen and (max-width: 600px) {
+        th, td {
+            padding: 10px;
+            font-size: 14px;
+        }
+    }
+</style>
+</head>
+<body>
+<h1>Science Education Implicit Association Test</h1>
+<div class="instructions">Press 'E' for Science/Positive, 'I' for Liberal Arts/Negative</div>
+<div class="word" id="word"></div>
+<div id="results"></div>
+<table id="resultsTable">
+    <thead>
+        <tr>
+            <th>Word</th>
+            <th>Category</th>
+            <th>Reaction Time (ms)</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<script>
+    const trials = [
+        { word: "Chemistry", category: "Science" },
+        { word: "History", category: "Liberal Arts" },
+        { word: "Biology", category: "Science" },
+        { word: "Literature", category: "Liberal Arts" },
+        { word: "Physics", category: "Science" },
+        { word: "Philosophy", category: "Liberal Arts" },
+        // Add more words as needed
+    ];
+    let currentTrialIndex = 0;
+    let startTime, endTime;
+    let results = [];
+
+    function displayNextWord() {
+        if (currentTrialIndex < trials.length) {
+            const trial = trials[currentTrialIndex];
+            document.getElementById('word').textContent = trial.word;
+            startTime = new Date().getTime();
+        } else {
+            document.getElementById('word').textContent = '';
+            document.getElementById('results').textContent = 'Test complete. See your results below.';
+            document.removeEventListener('keydown', handleKeyPress);
+            displayResults();
+        }
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === 'e' || event.key === 'i') {
+            endTime = new Date().getTime();
+            const reactionTime = endTime - startTime;
+            results.push({word: trials[currentTrialIndex].word, category: trials[currentTrialIndex].category, time: reactionTime});
+            currentTrialIndex++;
+            displayNextWord();
+        }
+    }
+
+    function displayResults() {
+        const resultsTable = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
+        results.forEach(result => {
+            let row = resultsTable.insertRow();
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            let cell3 = row.insertCell(2);
+            cell1.textContent = result.word;
+            cell2.textContent = result.category;
+            cell3.textContent = result.time;
+        });
+    }
+
+    document.addEventListener('keydown', handleKeyPress);
+    displayNextWord();
+</script>
+</body>
+</html>
