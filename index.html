@@ -19,7 +19,7 @@
         font-size: 20px; 
         margin-bottom: 10px; 
     }
-    #results { 
+    #results, #printButton { 
         margin-top: 20px; 
     }
     table {
@@ -124,8 +124,9 @@
     <tbody>
     </tbody>
 </table>
+<button id="printButton" class="button" onclick="printResults()">Print Results</button>
 <footer>
-    Deployed by PHC1125, FileName: JiaXinIAT, Last Update: 8-11-2024
+    Deployed by PHC1125, FileName: JiaXinIAT, Last Update: 4-11-2024
 </footer>
 <script>
     const modal = document.getElementById("myModal");
@@ -173,6 +174,7 @@
             document.getElementById('results').textContent = 'Test complete. See your results below.';
             document.removeEventListener('keydown', handleKeyPress);
             displayResults();
+            document.getElementById('printButton').style.display = 'block';
         }
     }
 
@@ -197,6 +199,10 @@
             cell2.textContent = result.category;
             cell3.textContent = result.time;
         });
+    }
+
+    function printResults() {
+        window.print();
     }
 </script>
 </body>
