@@ -2,7 +2,7 @@
 
 ## 📝 Description
 
-A created from scratch "Recreated Version" of the one made by Harvard.
+A recreated version of the one made by Harvard.
 
 ## 🎮 Demo
 
